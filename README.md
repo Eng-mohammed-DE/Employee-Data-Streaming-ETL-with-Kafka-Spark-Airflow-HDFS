@@ -1,40 +1,40 @@
-# Kafka-Cassandra ETL Pipeline with Apache Airflow
+# 🚀 Real-Time Kafka-Spark-HDFS-Airflow Pipeline
 
-## Project Overview
+A real-time data pipeline project that simulates employee data, streams it with Kafka, processes it using Apache Spark Structured Streaming, stores it in HDFS (in Parquet format), and orchestrates it all with Apache Airflow.
 
-This project demonstrates an ETL (Extract, Transform, Load) pipeline using Apache Kafka, Apache Cassandra, and Apache Airflow. The pipeline extracts random user data from a public API, transforms it, and loads it into a Cassandra database for storage. The pipeline is automated using Airflow DAGs.
+---
 
-## Architecture Overview
+## 🧠 Overview
 
-The pipeline consists of two main parts:
+This project demonstrates how to build a real-time streaming pipeline using:
 
-1. **Producer (Kafka)**: 
-   - Fetches random user data from a public API (`https://randomuser.me/api/`).
-   - Sends the data to a Kafka topic (`nodes`).
-   
-2. **Consumer (Kafka + Cassandra)**: 
-   - Consumes data from the Kafka topic (`nodes`).
-   - Inserts the consumed data into a Cassandra table (`users`).
+- **Kafka** for producing and consuming data
+- **Spark Structured Streaming** for processing JSON data from Kafka
+- **HDFS** to store the processed data in Parquet format
+- **Apache Airflow** to orchestrate and automate the pipeline
 
-The entire process is orchestrated using Apache Airflow, which runs the producer and consumer tasks in sequence.
+---
 
-### Technologies Used:
-- **Apache Kafka**: For message streaming between the producer and consumer.
-- **Apache Cassandra**: For storing the processed data in a NoSQL database.
-- **Apache Airflow**: For orchestrating the ETL process.
-- **Python**: The ETL logic is implemented using Python.
-- **Requests**: For fetching data from the public API.
-- **Kafka Python Client**: For producing and consuming Kafka messages.
-- **Cassandra Python Driver**: For connecting and inserting data into Cassandra.
+## ⚙️ Tech Stack
 
-## Project Structure
+| Tool            | Purpose                          |
+|-----------------|----------------------------------|
+| Python          | Scripting & Airflow DAGs         |
+| Apache Kafka    | Real-time data streaming         |
+| Apache Spark    | Streaming data processing        |
+| Apache Airflow  | Task orchestration               |
+| HDFS            | Distributed data storage         |
+| Parquet         | Columnar data format             |
 
-```plaintext
-kafka_cassandra_etl/
-│
-├── dags/
-│   └── kafka_cassandra_etl_dag.py   # Airflow DAG file containing the producer and consumer functions.
-│
-├── requirements.txt                  # Python dependencies
-├── README.md                         # Project documentation
-└── Dockerfile                        # Docker configuration (optional for containerization)
+---
+
+## 🔄 Pipeline Flow
+
+1. **Kafka Producer** (via Airflow PythonOperator):
+   - Simulates employee records (name, department) and sends them to Kafka topic `node4`.
+
+2. **Spark Consumer** (via Airflow SparkSubmitOperator):
+   - Reads the Kafka stream, parses JSON data, and writes it to HDFS as Parquet.
+
+3. **Airflow DAG**:
+   - Runs the producer → consumer flow with retry policies and monitoring.
